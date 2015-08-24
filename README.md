@@ -1,6 +1,8 @@
 minilint
 ========
 
+[![Build Status](https://secure.travis-ci.org/omphalos/minilint.png)](http://travis-ci.org/omphalos/minilint)
+
 `minilint` is a fast and small linter.
 It is intended to encourage modularity.
 
