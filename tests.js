@@ -105,8 +105,7 @@ exports['should toggle minilint'] = function(t) {
   // minilint:on
   t.ok(lint("'minilint:off'\n"
     + "'minilint:on'\n"
-    + "(1)"
-  }).contains('sol-('))
+    + "(1)").contains('sol-('))
   t.done()
 }
 
