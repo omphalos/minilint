@@ -87,9 +87,18 @@ var rules = [new Rule({
   check: function(line, blockLength) {
     return blockLength === this.limit + 1
   }
+}), new Rule({
+  type: 'eol-:',
+  text: 'Found ":" at line end.',
+  check: function(line) {
+      var trimmed = line.trim()
+      if(!trimmed.indexOf('case')) return
+      if(!trimmed.indexOf('default')) return
+      return trimmed[trimmed.length - 1] === ':'
+  }
 })]
 
-'&|><%?:;= '.split('').forEach(function(token) {
+'&|><%?;= '.split('').forEach(function(token) {
   rules.push(new Rule({
     type: 'eol-' + token,
     text: 'Found "' + token + '" at line end.',
@@ -100,10 +109,10 @@ var rules = [new Rule({
   }))
 })
 
-;[{ notOk: '+', ok: '++' },
-  { notOk: '-', ok: '--' },
-  { notOk: '*', ok: '/*' },
-  { notOk: '/', ok: '*/' },
+;[{ notOk: '+', ok: ['++'] },
+  { notOk: '-', ok: ['--'] },
+  { notOk: '*', ok: ['/*'] },
+  { notOk: '/', ok: ['*/', '//'] },
 ].forEach(function(pattern) {
   rules.push(new Rule({
     type: 'eol-' + pattern.notOk,
@@ -112,7 +121,7 @@ var rules = [new Rule({
       var trimmed = line.trim()
       var last1 = trimmed[trimmed.length - 1]
       var last2 = trimmed.substring(trimmed.length - 2)
-      return last1 === pattern.notOk && last2 !== pattern.ok
+      return last1 === pattern.notOk && pattern.ok.indexOf(last2) < 0
     }
   }))
 })

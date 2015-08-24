@@ -79,8 +79,11 @@ exports['should check line-ending symbols'] = function(t) {
   t.ok(!lint('abc').contains('eol-*'))
   t.ok(!lint('abc++').contains('eol-+'))
   t.ok(!lint('abc--').contains('eol--'))
+  t.ok(!lint('abc//').contains('eol-/'))
   t.ok(!lint('abc/*').contains('eol-/'))
   t.ok(!lint('abc*/').contains('eol-*'))
+  t.ok(!lint('case 123:').contains('eol-:'))
+  t.ok(!lint('default:').contains('eol-:'))
   t.done()
 }
 
