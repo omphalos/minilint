@@ -1,0 +1,38 @@
+{
+  "name": "minilint",
+  "version": "0.0.1",
+  "description": "A compact linter for writing compact code",
+  "bin": "cli.js",
+  "main": "minilint.js",
+  "scripts": {
+    "test": "./node_modules/.bin/nodeunit ./tests.js",
+    "lint": "./cli.js '**/*.js' --exclude 'node_modules/**' 'coverage/**'",
+    "watch": "./node_modules/.bin/nodemon -x './node_modules/.bin/nodeunit ./tests.js'"
+  },
+  "keywords": [
+    "analysis",
+    "lint",
+    "mini",
+    "code",
+    "hint",
+    "style"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/omphalos/minilint"
+  },
+  "author": "omphalos",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/omphalos/minilint/issues"
+  },
+  "homepage": "https://github.com/omphalos/minilint",
+  "devDependencies": {
+    "nodemon": "^1.4.1",
+    "nodeunit": "^0.9.1"
+  },
+  "dependencies": {
+    "colors": "^1.1.2",
+    "glob": "^5.0.14"
+  }
+}
