@@ -62,7 +62,7 @@ var rules = [new Rule({
 }), new Rule({
   type: 'block max',
   text: 'Exceeded $ lines in code block.',
-  limit: 4,
+  limit: 40,
   seed: { lineNumber: 1, blockLength: 0, isBlock: false },
   reduce: function(line, prev) {
 
@@ -84,8 +84,8 @@ var rules = [new Rule({
     next.blockLength = prev.blockLength + 1
     return next
   },
-  check: function(line, blockLength) {
-    return blockLength === this.limit + 1
+  check: function(line, accumulator) {
+    return accumulator.blockLength === this.limit + 1
   }
 }), new Rule({
   type: 'eol-:',

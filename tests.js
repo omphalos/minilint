@@ -50,6 +50,15 @@ exports['should check tabs'] = function(t) {
   t.done()
 }
 
+exports['should check block'] = function(t) {
+  t.ok(!lint(nBlock(40)).contains('block max'))
+  t.ok(lint(nBlock(41)).contains('block max'))
+  t.done()
+  function nBlock(n) {
+    return '{\n' + Array(n + 1).join('  \n') + '}'
+  }
+}
+
 exports['should check line-ending symbols'] = function(t) {
   t.ok(lint('abc&').contains('eol-&'))
   t.ok(lint('abc|').contains('eol-|'))
