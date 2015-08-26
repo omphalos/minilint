@@ -104,6 +104,14 @@ exports['should check line-starting symbols'] = function(t) {
   t.done()
 }
 
+exports['should check TODO'] = function(t) {
+  t.ok(!lint('TODO').contains('todo'))
+  t.ok(!lint('// abc').contains('TODO'))
+  t.ok(lint('// ' + 'TODO').contains('todo'))
+  t.ok(lint('  // ' + 'TODO').contains('todo'))
+  t.done()
+}
+
 exports['should toggle minilint'] = function(t) {
   t.ok(!lint(function() {
     'minilint:off'

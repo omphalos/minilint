@@ -30,6 +30,13 @@ Usage
 
     minilint <path1> <path2> <...>
 
+Note
+====
+
+If no arguments are passed,
+minilint will include `**/*.js`
+and exclude `node_modules/**`.
+
 Options
 =======
 
@@ -40,11 +47,12 @@ Options
 Examples
 ========
 
+    minilint
     minilint file.js
     minilint file.js --verbose
     minilint file1.js file2.js file3.js
-    minilint "**.*.js" --exclude "node_modules/**"
-    minilint "**.*.js" -v -e "node_modules/**"
+    minilint "**/*.js" --exclude "node_modules/**"
+    minilint "**/*.js" -v -e "node_modules/**"
 
 License
 =======

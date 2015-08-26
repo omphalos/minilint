@@ -13,12 +13,19 @@ var excludePaths = []
 var verbose
 var excluding
 
+console.log('**** minilint ****'.bold)
+
 if(process.argv.indexOf('--help') >= 0 || process.argv.indexOf('-h') >= 0) {
-  console.log('minilint')
   console.log()
   console.log('usage:')
   console.log()
   console.log('  minilint <path1> <path2> <...>')
+  console.log()
+  console.log('note:')
+  console.log()
+  console.log('  If no arguments are passed,'
+    + ' minilint will include `**/*.js`'
+    + ' and exclude `node_modules/**`')
   console.log()
   console.log('options:')
   console.log()
@@ -28,11 +35,13 @@ if(process.argv.indexOf('--help') >= 0 || process.argv.indexOf('-h') >= 0) {
   console.log()
   console.log('examples:')
   console.log()
+  console.log('  minilint')
   console.log('  minilint file.js')
   console.log('  minilint file.js --verbose')
   console.log('  minilint file1.js file2.js file3.js')
   console.log('  minilint "**.*.js" --exclude "node_modules/**"')
   console.log('  minilint "**.*.js" -v -e "node_modules/**"')
+  console.log()
   return process.exit(result)
 }
 
@@ -44,6 +53,11 @@ process.argv.slice(1).forEach(function(arg) {
     excludePaths.push(unwrap(arg))
   else includePaths.push(unwrap(arg))
 })
+
+if(!excludePaths.length && ! includePaths.length) {
+  includePaths.push('**/*.js')
+  excludePaths.push('node_modules/**')
+}
 
 readSeries('glob', globAndExclude, includePaths, function(globs) {
   var fileNames = globs.reduce(function(prev, curr) {
@@ -77,10 +91,13 @@ function lintAndLogFile(readFile) {
   var badLineNumbers = Object.keys(lint)
   badLineNumbers.forEach(function(badLine) {
     var lineLint = lint[badLine]
-    console.log(fileName.cyan, badLine + ':', lineLint.line.gray)
     lineLint.lint.forEach(function(problem) {
-      console.log('> ' + problem.toString().yellow)
+      console.log((problem.toString() + ': ').yellow)
     })
+    console.log(
+      fileName.cyan.underline,
+      badLine.underline,
+      lineLint.line.gray.underline)
   })
   if(badLineNumbers.length) {
     result = 1
