@@ -88,15 +88,6 @@ var rules = [new Rule({
     return accumulator.blockLength === this.limit + 1
   }
 }), new Rule({
-  type: 'eol-:',
-  text: 'Found ":" at line end',
-  check: function(line) {
-    var trimmed = line.trim()
-    if(!trimmed.indexOf('case')) return
-    if(!trimmed.indexOf('default')) return
-    return trimmed[trimmed.length - 1] === ':'
-  }
-}), new Rule({
   type: 'todo',
   text: 'Found "// ' + 'TODO"',
   check: function(line) {
