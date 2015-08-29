@@ -11,12 +11,13 @@ var result = 0
 var includePaths = []
 var excludePaths = []
 var pkg = JSON.parse(fs.readFileSync(__dirname + '/package.json'))
+var argv = process.argv
 var verbose
 var excluding
 
 console.log(('**** minilint v' + pkg.version + ' ****').bold)
 
-if(process.argv.indexOf('--help') >= 0 || process.argv.indexOf('-h') >= 0) {
+if(argv.indexOf('--help') >= 0 || argv.indexOf('-h') >= 0) {
   console.log()
   console.log('usage:')
   console.log()
@@ -46,8 +47,8 @@ if(process.argv.indexOf('--help') >= 0 || process.argv.indexOf('-h') >= 0) {
   return process.exit(result)
 }
 
-process.argv.slice(1).forEach(function(arg) {
-  if(arg === __filename) return
+argv.slice(1).forEach(function(arg) {
+  if(realpath(arg) === __filename) return
   if(arg === '--exclude' || arg === '-e') return excluding = true
   if(arg === '--verbose' || arg === '-v') return verbose = true
   if(excluding)
@@ -68,6 +69,16 @@ readSeries('glob', globAndExclude, includePaths, function(globs) {
   readSeries('open', fs.readFile.bind(fs), fileNames, onFilesRead)
 })
 
+function realpath(path) {
+  try {
+    return fs.realpathSync(arg)
+  } catch(err) {
+    if(argv.indexOf('--verbose') >= 0 || argv.indexOf('-v') >= 0)
+      console.log(err)
+    return null
+  }
+}
+
 function globAndExclude(pattern, cont) {
   glob(pattern, { ignore: excludePaths }, cont)
 }
@@ -76,7 +87,7 @@ function onFilesRead(readFiles) {
   readFiles.forEach(lintAndLogFile)
   console.log(
     result ? 'fail'.red : 'pass'.green,
-    process.argv.join(' ').blue)
+    argv.join(' ').blue)
 }
 
 function unwrap(arg) {
