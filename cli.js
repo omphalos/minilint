@@ -26,7 +26,7 @@ if(process.argv.indexOf('--help') >= 0 || process.argv.indexOf('-h') >= 0) {
   console.log()
   console.log('  if no arguments are passed,'
     + ' minilint will include `**/*.js`'
-    + ' and exclude `node_modules/**`')
+    + ' and exclude `node_modules/**` and `**/*.min.js`')
   console.log()
   console.log('options:')
   console.log()
@@ -40,7 +40,7 @@ if(process.argv.indexOf('--help') >= 0 || process.argv.indexOf('-h') >= 0) {
   console.log('  minilint file.js')
   console.log('  minilint file.js --verbose')
   console.log('  minilint file1.js file2.js file3.js')
-  console.log('  minilint "**.*.js" --exclude "node_modules/**"')
+  console.log('  minilint "**.*.js" --exclude "**/*.min.js" "node_modules/**"')
   console.log('  minilint "**.*.js" -v -e "node_modules/**"')
   console.log()
   return process.exit(result)
@@ -58,6 +58,7 @@ process.argv.slice(1).forEach(function(arg) {
 if(!excludePaths.length && ! includePaths.length) {
   includePaths.push('**/*.js')
   excludePaths.push('node_modules/**')
+  excludePaths.push('**/*.min.js')
 }
 
 readSeries('glob', globAndExclude, includePaths, function(globs) {
