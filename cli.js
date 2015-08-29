@@ -10,10 +10,11 @@ var fs = require('fs')
 var result = 0
 var includePaths = []
 var excludePaths = []
+var pkg = JSON.parse(fs.readFileSync(__dirname + '/package.json'))
 var verbose
 var excluding
 
-console.log('**** minilint ****'.bold)
+console.log(('**** minilint v' + pkg.version + ' ****').bold)
 
 if(process.argv.indexOf('--help') >= 0 || process.argv.indexOf('-h') >= 0) {
   console.log()
@@ -23,7 +24,7 @@ if(process.argv.indexOf('--help') >= 0 || process.argv.indexOf('-h') >= 0) {
   console.log()
   console.log('note:')
   console.log()
-  console.log('  If no arguments are passed,'
+  console.log('  if no arguments are passed,'
     + ' minilint will include `**/*.js`'
     + ' and exclude `node_modules/**`')
   console.log()
