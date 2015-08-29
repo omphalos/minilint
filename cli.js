@@ -48,7 +48,7 @@ if(argv.indexOf('--help') >= 0 || argv.indexOf('-h') >= 0) {
 }
 
 argv.slice(1).forEach(function(arg) {
-  if(realpath(arg) === __filename) return
+  if(realpath(arg) === realpath(__filename)) return
   if(arg === '--exclude' || arg === '-e') return excluding = true
   if(arg === '--verbose' || arg === '-v') return verbose = true
   if(excluding)
