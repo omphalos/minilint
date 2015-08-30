@@ -44,7 +44,7 @@ if(argv.indexOf('--help') >= 0 || argv.indexOf('-h') >= 0) {
   console.log('  minilint "**.*.js" --exclude "**/*.min.js" "node_modules/**"')
   console.log('  minilint "**.*.js" -v -e "node_modules/**"')
   console.log()
-  return process.exit(result)
+  return process.exit(0)
 }
 
 argv.slice(1).forEach(function(arg) {
@@ -71,7 +71,7 @@ readSeries('glob', globAndExclude, includePaths, function(globs) {
 
 function realpath(path) {
   try {
-    return fs.realpathSync(arg)
+    return fs.realpathSync(path)
   } catch(err) {
     if(argv.indexOf('--verbose') >= 0 || argv.indexOf('-v') >= 0)
       console.log(err)
@@ -88,6 +88,7 @@ function onFilesRead(readFiles) {
   console.log(
     result ? 'fail'.red : 'pass'.green,
     argv.join(' ').blue)
+  process.exit(result)
 }
 
 function unwrap(arg) {
