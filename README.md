@@ -34,8 +34,8 @@ Note
 ====
 
 If no arguments are passed,
-minilint will include `**/*.js`
-and exclude `node_modules/**`.
+minilint will automatically include `**/*.js`
+and exclude `node_modules/**`, `coverage/**`, and `**/*.min.js`.
 
 Options
 =======

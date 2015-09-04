@@ -27,7 +27,7 @@ if(argv.indexOf('--help') >= 0 || argv.indexOf('-h') >= 0) {
   console.log()
   console.log('  if no arguments are passed,'
     + ' minilint will include `**/*.js`'
-    + ' and exclude `node_modules/**` and `**/*.min.js`')
+    + ' and exclude `node_modules/**`, `coverage/**` and `**/*.min.js`')
   console.log()
   console.log('options:')
   console.log()
@@ -59,6 +59,7 @@ argv.slice(1).forEach(function(arg) {
 if(!excludePaths.length && ! includePaths.length) {
   includePaths.push('**/*.js')
   excludePaths.push('node_modules/**')
+  excludePaths.push('coverage/*.*')
   excludePaths.push('**/*.min.js')
 }
 
