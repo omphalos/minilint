@@ -59,7 +59,7 @@ argv.slice(1).forEach(function(arg) {
 if(!excludePaths.length && ! includePaths.length) {
   includePaths.push('**/*.js')
   excludePaths.push('node_modules/**')
-  excludePaths.push('coverage/*.*')
+  excludePaths.push('coverage/**')
   excludePaths.push('**/*.min.js')
 }
 
