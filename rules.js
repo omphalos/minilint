@@ -100,8 +100,7 @@ var rules = [new Rule({
     type: 'eol-' + token,
     text: 'Found "' + token + '" at line end',
     check: function(line) {
-      var trimmed = line.trim()
-      return trimmed[trimmed.length - 1] === token
+      return line[line.length - 1] === token
     }
   }))
 })
