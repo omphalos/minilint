@@ -95,11 +95,27 @@ exports['should check line-ending symbols'] = function(t) {
   t.done()
 }
 
-exports['should check line-starting symbols'] = function(t) {
+exports['should check spaces between keywords and parens'] = function(t) {
+  t.ok(!lint('if(true) {}').contains('if-space-paren'))
+  t.ok(!lint('function(x) {}').contains('function-space-paren'))
+  t.ok(!lint('switch(x) {}').contains('switch-space-paren'))
+  t.ok(lint('if ' + '(true) {}').contains('if-space-paren'))
+  t.ok(lint('function ' + '(x) {}').contains('function-space-paren'))
+  t.ok(lint('switch ' + '(x) {}').contains('switch-space-paren'))
+  t.done()
+}
+
+exports['should check line-starting ('] = function(t) {
   t.ok(!lint('abc').contains('sol-('))
-  t.ok(!lint('abc').contains('sol-['))
   t.ok(lint('(abc').contains('sol-('))
+  t.done()
+}
+
+exports['should check line-starting ['] = function(t) {
+  t.ok(!lint('abc').contains('sol-['))
+  t.ok(!lint('var x = [\n  [],\n  []\n]').contains('sol-['))
   t.ok(lint('[abc').contains('sol-['))
+  t.ok(lint('  [').contains('sol-['))
   t.done()
 }
 

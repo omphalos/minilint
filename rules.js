@@ -93,7 +93,28 @@ var rules = [new Rule({
   check: function(line) {
     return line.indexOf('// ' + 'TODO') >= 0
   }
+}), new Rule({
+  type: 'sol-(',
+  text: 'Found "(" at line start',
+  check: function(line) { return line.trim()[0] === '(' }
+}), new Rule({
+  reduce: function(line, prev) { return line },
+  type: 'sol-[',
+  text: 'Found "[" at line start',
+  check: function(line, accumulator) {
+    var last = accumulator && accumulator[accumulator.length - 1] || ''
+    if(last === ',' || last === '[') return false
+    return line.trim()[0] === '['
+  }
 })]
+
+'function if switch'.split(' ').forEach(function(keyword) {
+  rules.push(new Rule({
+    type: keyword + '-space-paren',
+    text: 'Found space between ' + keyword + ' and paren',
+    check: function(line) { return line.indexOf(keyword + ' (') >= 0 }
+  }))
+})
 
 '&|><%?;= '.split('').forEach(function(token) {
   rules.push(new Rule({
@@ -119,14 +140,6 @@ var rules = [new Rule({
       var last2 = trimmed.substring(trimmed.length - 2)
       return last1 === pattern.notOk && pattern.ok.indexOf(last2) < 0
     }
-  }))
-})
-
-'(['.split('').forEach(function(token) {
-  rules.push(new Rule({
-    type: 'sol-' + token,
-    text: 'Found "' + token + '" line start',
-    check: function(line) { return line.trim()[0] === token }
   }))
 })
 
